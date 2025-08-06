@@ -1,44 +1,62 @@
-/* --- Границы и шрифт -------------------------------------------------- */
+/* ─── Границы и шрифт ──────────────────────────────────────────────── */
 #wrapper{width:900px;height:600px;overflow:auto;border:1px solid #ccc}
 html,body{margin:0;height:100%;font:14px/1.3 "Open Sans",Arial,sans-serif}
-svg      {width:100%;height:100%;user-select:none}
-.tree-wrapper{
-    width:100%;          /* занимает всю строку */
-    height:100vh;        /* или 60vh, 500px — как нужно */
-    overflow:hidden;     /* чтобы не было скролла, если не хотите */
-  }
-  svg{
-    width:100%;
-    height:100%;
-    display:block;       /* убираем лишний white-space */
-  }
-/* --- линии ------------------------------------------------------------ */
+
+.tree-wrapper{width:100%;height:100vh;overflow:hidden}
+svg{width:100%;height:100%;display:block;user-select:none}
+
+/* ─── линии ────────────────────────────────────────────────────────── */
 .link{fill:none;stroke:#7a9b8f;stroke-width:2px}
 
-/* --- узлы ------------------------------------------------------------- */
+/* ─── узлы (общие) ─────────────────────────────────────────────────── */
 .node rect{stroke:#fff;stroke-width:1px;rx:4;ry:4}
-.node text{pointer-events:none;fill:#fff;font-size:13px}
+.node text{pointer-events:none;font-size:13px}
 
+/* белый текст выводим ТОЛЬКО у не-лицензионных узлов */
+.node:not(.license) text{fill:#fff}
+
+/* ─── базовые фоны ─────────────────────────────────────────────────── */
 .question rect,
 .answerGroup rect{fill:#385b2c}
 
 /* овалы Ja / Nein */
 .answer rect{fill:#385b2c;rx:20;ry:20}
 
-/* стратегия по умолчанию = синий */
+/* стратегия (по умолчанию синий) */
 .strategy rect{fill:#3d78bf}
 
-/* переопределяем цвет стратегии по лицензии */
-.yellow   rect{fill:#f6d500}.yellow text{fill:white}
-.greenBox rect{fill:#95b426}.greenBox text{fill:white}
-.blueBox  rect{fill:#3d78bf}.blueBox  text{fill:#fff}
+/* меняем цвет стратегии, если она помечена классами blueBox/greenBox/yellow */
+.blueBox  rect{fill:#3d78bf}
+.greenBox rect{fill:#95b426}
+.yellow   rect{fill:#f6d500}
 
+.blueBox  text,
+.greenBox text,
+.yellow   text{fill:#fff}
+
+/* затемнение свёрнутых веток */
 .collapsed rect{opacity:.35}
 
-/* подпись лицензии под блоком ----------------------------------------- */
-.lic{font-weight:700}
-.lic.blue  {fill:#3d78bf}
-.lic.yellow{fill:#f6d500}
-.lic.green {fill:#95b426}
-/* чтобы лейбл выглядел как Ja/Nein (эллипс) */
+/* ─── Лицензии (дочерние тексты под стратегиями) ───────────────────── */
+/* сами лицензионные узлы получают класс .license и под-класс цвета   */
+/* .node.license.blue / .node.license.yellow / .node.license.green    */
+
+.node.license text   {font-weight:700}              /* общий жирный */
+.node.license.blue   text{fill:#3d78bf}             /* -P  */
+.node.license.yellow text{fill:#d4a400}             /* -W  */
+.node.license.green  text{fill:#4f7015}             /* -S  */
+
+/* ─── если из JS добавляется class="lic ..." (старый способ) ───────── */
+.lic             {font-weight:700}
+.lic.blue        {fill:#3d78bf}
+.lic.yellow      {fill:#d4a400}
+.lic.green       {fill:#4f7015}
+
+/* ─── подпись-лейбл (Ja/Nein в кружке) ─────────────────────────────── */
 .label rect{fill:#86ada2;rx:20;ry:20}
+
+
+
+
+
+
